@@ -77,4 +77,11 @@ public class Stock implements java.io.Serializable {
 		this.stockDailyRecords = stockDailyRecords;
 	}
 
+	@Override
+	public String toString() {
+		return "Stock [stockId=" + stockId + ", stockCode=" + stockCode + ", stockName=" + stockName
+				 + "]";
+	}
+
+	
 }

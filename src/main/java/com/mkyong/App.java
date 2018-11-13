@@ -1,7 +1,9 @@
 package com.mkyong;
 
 import java.util.Date;
+import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import com.mkyong.stock.Stock;
@@ -34,5 +36,36 @@ public class App {
 
 		session.getTransaction().commit();
 		System.out.println("Done");
+		
+		int id = stock.getStockId();
+		 
+		
+		session.beginTransaction();
+		
+		try {
+			session.beginTransaction();
+
+			Stock dbStock = (Stock) session.get(Stock.class, id);
+
+			System.out.println(dbStock.getStockId() + " - " + dbStock.getStockName() + "__"+ dbStock.getStockDailyRecords() );
+			
+			Set<StockDailyRecord> stockDailyRecord1 = dbStock.getStockDailyRecords();
+			
+			for( StockDailyRecord stockDailyRecord : stockDailyRecord1) {
+				System.out.println(stockDailyRecord);
+			}
+			
+			session.getTransaction().commit();
+
+		}
+
+		catch (HibernateException e) {
+
+			e.printStackTrace();
+
+			session.getTransaction().rollback();
+
+		}
+
 	}
 }
